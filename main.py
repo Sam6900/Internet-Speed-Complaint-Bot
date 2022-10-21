@@ -5,7 +5,7 @@ import time
 TWITTER_EMAIL = os.environ["EMAIL"]
 TWITTER_PSWD = os.environ["PSWD]
 TWITTER_USERNAME = os.environ["USERNAME"]
-min_down_speed, min_upload_speed = 100, 40
+min_down_speed, min_upload_speed = 100, 20
 chrome_driver_path = "C:/Development/chromedriver.exe"
 
 driver = webdriver.Chrome(service=Service(chrome_driver_path))
@@ -51,5 +51,12 @@ if float(download_speed) < min_down_speed or float(upload_speed) < min_upload_sp
     login_btn = driver.find_element("xpath", '//*[@id="layers"]/div[2]/div/div/div/div/div/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div/div[1]/div/div/div/div/span/span')
     login_btn.click()
     time.sleep(5)
-                          
+
+    # Tweeting
+    message = f"Hey <InternetServiceProvider>, Why is my internet speed {download_speed}down/{upload_speed}up when I pay for {min_down_speed}down/{min_upload_speed}up."
+    tweet_text = driver.find_element("class name", "public-DraftStyleDefault-block")
+    tweet_text.send_keys(message)
+    tweet_btn = driver.find_element("xpath", '//*[@id="react-root"]/div/div/div[2]/main/div/div/div/div/div/div[3]/div/div[2]/div[1]/div/div/div/div[2]/div[3]/div/div/div[2]/div[3]/div/span/span')
+    tweet_btn.click()
+
 driver.quit()
